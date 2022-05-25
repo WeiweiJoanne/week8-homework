@@ -20,6 +20,8 @@ const PostsController = {
     const body = req.body
     const { content, image, user } = body
     try{
+      // 判斷使用者User ObjectId (若傳入不存在的 User ObjectId ，也會新增成功)
+      // findById(id).exec(); 如果找不到就是 null
       const hasUser = await UserModel.findById(user).exec()
       if (hasUser !== null) {
         if (content.trim() !== '') {

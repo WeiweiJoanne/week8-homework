@@ -1,0 +1,111 @@
+{
+	"variables": [],
+	"info": {
+		"name": "node.js 直播班 week4",
+		"_postman_id": "0b296d6c-e671-61b0-1e4e-4ab05b1cbae0",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GetPosts",
+			"request": {
+				"url": {
+					"raw": "https://mysterious-hollows-42702.herokuapp.com/users/posts?timeSort=asc&q=烏克蘭",
+					"protocol": "https",
+					"host": [
+						"mysterious-hollows-42702",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"users",
+						"posts"
+					],
+					"query": [
+						{
+							"key": "timeSort",
+							"value": "asc",
+							"equals": true,
+							"description": ""
+						},
+						{
+							"key": "q",
+							"value": "烏克蘭",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": "搜尋全部貼文/搜尋相關貼文(依時間先後排序)"
+			},
+			"response": []
+		},
+		{
+			"name": "NewPost",
+			"request": {
+				"url": "https://mysterious-hollows-42702.herokuapp.com/users/posts",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n \"user\":\"627e6bea13c7a4d484db7bcb\",\n \"content\":\"想去埃及玩\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "DeletePost",
+			"request": {
+				"url": "http://localhost:3000/users/posts/627e959ce118971bebb9c618",
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"description": "刪除全部貼文/依網址變數id 刪除該貼文"
+			},
+			"response": []
+		},
+		{
+			"name": "UpdatePost",
+			"request": {
+				"url": "https://mysterious-hollows-42702.herokuapp.com/users/posts/627e8b4958857a9fb185c610",
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"content\":\"想去丹麥玩\"\n}"
+				},
+				"description": "依照網址變數id更新貼文"
+			},
+			"response": []
+		},
+		{
+			"name": "GetUsers",
+			"request": {
+				"url": "https://mysterious-hollows-42702.herokuapp.com/users",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": "取Users資料"
+			},
+			"response": []
+		}
+	]
+}

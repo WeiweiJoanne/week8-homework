@@ -15,6 +15,8 @@ const userSchema = new mongoose.Schema({
   photo: {
     type: String
   }
+},{
+  versionKey: false
 })
 
 const User = mongoose.model('user', userSchema)

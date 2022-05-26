@@ -32,7 +32,7 @@ const PostsController = {
 
   }),
   updatePosts: handErrAsync(async (req,res,next)=>{
-    const id = req.params._id
+    const id = req.params.id
     const body = req.body
     const { content, image, user } = body
     if(!id){
@@ -45,7 +45,7 @@ const PostsController = {
     updatePosts !== null ? handleSuccess(res, updatePosts) : handleError(res)
   }),
   deleteOnePosts: handErrAsync(async (req, res, next) => {
-    const id = req.params._id
+    const id = req.params.id
     if (!id) {
       return appErr(400, '欲刪除的貼文ID不存在', next)
     }

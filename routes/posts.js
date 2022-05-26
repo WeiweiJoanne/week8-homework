@@ -7,7 +7,7 @@ const handleErrorAsync = require('../services/handErrAsync')
 router.get('/', PostsController.getPosts);
 router.post('/', PostsController.postPosts);
 router.delete('/', PostsController.deleteAllPosts);
-router.delete('/:_id', PostsController.deleteOnePosts);
-router.patch('/:_id', PostsController.updatePosts);
+router.delete('/:id', PostsController.deleteOnePosts);
+router.patch('/:id', PostsController.updatePosts);
 
 module.exports = router;

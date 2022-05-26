@@ -23,8 +23,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/user', usersRouter);
-app.use('/posts', postsRouter);
-app.use('/post', postsRouter);
+app.use(postsRouter)
+// app.use('/posts', postsRouter);
+// app.use('/post', postsRouter);
 
 app.use(function (req, res, next) {
   res.status(404).send({

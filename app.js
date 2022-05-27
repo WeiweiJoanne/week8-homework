@@ -45,7 +45,7 @@ app.use(function (err, req, res, next) {
   }
 
   if (process.env.NODE_ENV === 'prod') {
-    if (err.name === 'ValidationError') {
+    if (err.name === 'ValidatorError') {
       err.message =  '欄位驗證不正確'
       err.isOperational = true
       return resErr.resErrProd(err, res)

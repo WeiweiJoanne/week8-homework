@@ -2,38 +2,36 @@ const mongoose = require('mongoose')
 
 const UserModel = require('../models/user')
 
-const handleError = require('../services/handleError')
+// const handleError = require('../services/handleError')
 const appErr = require('../services/appErr')
 const handleSuccess = require('../services/handleSuccess')
+const { generateSendJWT } = require('../services/auth')
 
 const validator = require('validator')
 const bcrypt = require('bcryptjs')
 
 const UserController = {
-  async getUser(req, res, next) {
+  async getUsers(req, res, next) {
     const getUser = await UserModel.find({})
     handleSuccess(res, getUser)
   },
-  async postUser(req, res, next) {
-    const body = req.body
-    const { name, email, photo } = body
+  async getUser(req, res, next) {
+    const { email, password } = req.body
+    if (!email || !password) {
+      return appErr(400, '請填寫空白欄位！', next)
+    }
+    const user = await UserModel.findOne({ email }).select('+password')
+    const correctPWD = await bcrypt.compare(password, user.password)
 
-    if (email === undefined || email.trim() == '') {
-      return appErr(400, '請填寫email', next)
+    if (!correctPWD){
+      return appErr(401, '帳號或密碼錯誤，請重新輸入！', next)
     }
 
-    const hasUser = await UserModel.findOne({ email: email }).exec()
-
-    if (hasUser === null) {
-      const addUser = await UserModel.create({ name, email, photo })
-      handleSuccess(res, addUser)
-    } else {
-      return appErr(400, 'email 重複', next)
-    }
+    generateSendJWT(user,200,res)
 
   },
   async addUser(req, res, next) {
-    const { nickName, email, password } = req.body
+    let { nickName, email, password } = req.body
     if (!nickName || !email || !password) {
       return appErr(400, '請填寫必填欄位', next)
     }
@@ -46,17 +44,23 @@ const UserController = {
       return appErr(400, '不符合email格式', next)
     }
 
-    const reg = /^([a-zA-Z]+\d+|\d+[a-zA-Z]+)[a-zA-Z0-9]*$/ 
-    const isPassword = reg.test(password)
+    const reg = /^([a-zA-Z]+\d+|\d+[a-zA-Z]+)[a-zA-Z0-9]*$/
+    const isMixPwd = reg.test(password)
 
-    if (!validator.isLength(password, { min: 8 }) || !isPassword) {
+    if (!validator.isLength(password, { min: 8 }) || !isMixPwd) {
       return appErr(400, '密碼需至少 8 碼以上，並英數混合', next)
     }
 
-    
-    const addUser = await UserModel.create()
-
-
+    password = await bcrypt.hash(password, 12)
+    const addUser = await UserModel.create({ nickName, email, password })
+    // console.log(addUser);
+    generateSendJWT(addUser, 201, res)
+  },
+  async getProfile(req, res, next) {
+    res.status(200).send({
+      "status": "success",
+      "user": req.user
+    })
   }
 }
 

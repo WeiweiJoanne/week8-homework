@@ -23,12 +23,10 @@ const UserController = {
     const user = await UserModel.findOne({ email }).select('+password')
     const correctPWD = await bcrypt.compare(password, user.password)
 
-    if (!correctPWD){
+    if (!correctPWD) {
       return appErr(401, '帳號或密碼錯誤，請重新輸入！', next)
     }
-
-    generateSendJWT(user,200,res)
-
+    generateSendJWT(user, 200, res)
   },
   async addUser(req, res, next) {
     let { nickName, email, password } = req.body
@@ -53,14 +51,40 @@ const UserController = {
 
     password = await bcrypt.hash(password, 12)
     const addUser = await UserModel.create({ nickName, email, password })
-    // console.log(addUser);
     generateSendJWT(addUser, 201, res)
   },
   async getProfile(req, res, next) {
-    res.status(200).send({
-      "status": "success",
-      "user": req.user
-    })
+    handleSuccess(res, req.user)
+  },
+  async updateProfile(req, res, next) {
+    const { nickName, sex } = req.body
+    if (!validator.isLength(nickName, { min: 2 })) {
+      return appErr(400, '暱稱至少2個字元以上', next)
+    }
+    const updateUser = await UserModel.findByIdAndUpdate(req.user._id, {
+      nickName, sex
+    }, { new: true })
+    handleSuccess(res, updateUser)
+  },
+  async resetPWD(req, res, next) {
+    const { pwd1, pwd2 } = req.body
+    if (pwd1 !== pwd2) {
+      return appErr(400, '密碼輸入不一致!',next)
+    }
+
+    const reg = /^([a-zA-Z]+\d+|\d+[a-zA-Z]+)[a-zA-Z0-9]*$/
+    const isMixPwd = reg.test(pwd1)
+
+    if (!validator.isLength(pwd1, { min: 8 }) || !isMixPwd) {
+      return appErr(400, '密碼需至少 8 碼以上，並英數混合', next)
+    }
+
+    const password = await bcrypt.hash(pwd1, 12)
+    const updatePWD = await UserModel.findByIdAndUpdate(req.user._id,{
+      password: password
+    }, { new: true})
+    handleSuccess(res, updatePWD)
+
   }
 }
 

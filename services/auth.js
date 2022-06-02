@@ -11,6 +11,15 @@ const isAuth = async (req, res, next) => {
   if (!token) {
     return appErr(401, '請登入帳號！', next)
   }
+  
+  try {
+    const decode = await jwt.verify(token, process.env.JWT_SECRET);
+    const currentUser = await UserModel.findById(decode.id)
+    req.user = currentUser
+    next()
+  } catch (err) {
+    appErr(401, '登入失敗', next)
+  }
 
   // const decode = await new Promise((resolve, reject) => {
   //   jwt.verify(token, process.env.JWT_SECRET, function (err, payload) {
@@ -22,14 +31,7 @@ const isAuth = async (req, res, next) => {
   //   });
   // })
 
-  try {
-    const decode = await jwt.verify(token, process.env.JWT_SECRET);
-    const currentUser = await UserModel.findById(decode.id)
-    req.user = currentUser
-    next()
-  } catch (err) {
-    appErr(401, '登入失敗', next)
-  }
+ 
   
 }
 

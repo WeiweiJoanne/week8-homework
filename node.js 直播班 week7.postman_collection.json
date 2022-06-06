@@ -1,0 +1,140 @@
+{
+	"variables": [],
+	"info": {
+		"name": "node.js 直播班 week7",
+		"_postman_id": "b27eeb61-882e-7e37-8b34-944aff8b312c",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "signUp",
+			"request": {
+				"url": "https://infinite-garden-91369.herokuapp.com/users/sign_up",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyOTgyZmVkMjI4NzY5NTQ4YzliM2M0MSIsImlhdCI6MTY1NDE0MTM5NywiZXhwIjoxNjU0NzQ2MTk3fQ.ArGCmvFubfWRdg46umiEeW-Ajt1fsZgbL7T24JAgYgw",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nickName\":\"doggy\",\r\n    \"email\":\"doggy999@gmail.com\",\r\n    \"password\":\"doggy123456\"\r\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "signIn",
+			"request": {
+				"url": "https://infinite-garden-91369.herokuapp.com/users/sign_in",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyOTg1ZmQwZWJmYzRlMGJjN2NmZGMxMSIsImlhdCI6MTY1NDE1MzE2OCwiZXhwIjoxNjU0NzU3OTY4fQ.0e2zSjbImRQiG8uEB-0ifkqAbOaHWqsuzHSiszfHH_M",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\":\"doggy999@gmail.com\",\r\n    \"password\":\"doggy123456\"\r\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "getProfile",
+			"request": {
+				"url": "https://infinite-garden-91369.herokuapp.com/users/profile",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyOTg2NmQ0NzYzMzBjOTZlM2NlMjA0NSIsImlhdCI6MTY1NDE1NTEwMiwiZXhwIjoxNjU0NzU5OTAyfQ.Uduqpct7ukD6u6rVAbNsntlU0DoTOs2mIfRpBsmuKGk",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "updateProfile",
+			"request": {
+				"url": "https://infinite-garden-91369.herokuapp.com/users/profile",
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyOTg2NmQ0NzYzMzBjOTZlM2NlMjA0NSIsImlhdCI6MTY1NDE1NTEwMiwiZXhwIjoxNjU0NzU5OTAyfQ.Uduqpct7ukD6u6rVAbNsntlU0DoTOs2mIfRpBsmuKGk",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nickName\":\"Catty\",\"sex\":\"female\"\r\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "updatePassword",
+			"request": {
+				"url": "https://infinite-garden-91369.herokuapp.com/users/updatePassword",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyOTg2NmQ0NzYzMzBjOTZlM2NlMjA0NSIsImlhdCI6MTY1NDE1NTEwMiwiZXhwIjoxNjU0NzU5OTAyfQ.Uduqpct7ukD6u6rVAbNsntlU0DoTOs2mIfRpBsmuKGk",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"pwd1\":\"132456798aaa\",\r\n    \"pwd2\":\"132456798aaa\"\r\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "uploadImg",
+			"request": {
+				"url": "https://infinite-garden-91369.herokuapp.com/upload",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "",
+							"value": "",
+							"description": "",
+							"type": "file"
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

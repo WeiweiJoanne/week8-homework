@@ -7,8 +7,8 @@ const upload = multer({
   },
   fileFilter(req, file, cb) {
     const ext = path.extname(file.originalname).toLowerCase()
-    if (ext !== '.jpg' && ext !== '.png' && ext !== '.jpeg'){
-      cb(new Error("圖檔格式錯誤!!! 僅限上傳 jpg/png/jpeg "));
+    if (ext !== '.jpg' && ext !== '.png'){
+      cb(new Error("圖檔格式錯誤!!! 僅限上傳 jpg/png "));
     }
     cb(null, true)
   }

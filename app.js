@@ -8,6 +8,7 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/user');
 var postsRouter = require('./routes/posts');
+var uploadImgRouter = require('./routes/upload');
 
 const resErr = require('./services/resErr')
 
@@ -22,6 +23,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use(postsRouter)
+app.use(uploadImgRouter)
 // app.use('/posts', postsRouter);
 // app.use('/post', postsRouter);
 

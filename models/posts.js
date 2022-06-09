@@ -19,14 +19,12 @@ const postSchema = new mongoose.Schema({
     ref:"user",
     required: [true, '使用者 id 未填寫']
   },
-  // name: {
-  //   type: String,
-  //   required: [true, '使用者 id 未填寫']
-  // },
-  likes: {
-    type: Number,
-    default: 0
-  }
+  likes: [
+    {
+      type: mongoose.Schema.ObjectId,
+      ref: 'user'
+    }
+  ]
 }, {
   versionKey: false
 })

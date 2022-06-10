@@ -13,5 +13,6 @@ router.delete('/post/:id',isAuth, handErrAsync(PostsController.deleteOnePost));
 router.patch('/post/:id',isAuth, handErrAsync(PostsController.updatePost));
 
 router.post('/post/:id/like',isAuth, handErrAsync(PostsController.likePost));
+router.delete('/post/:id/unlike', isAuth, handErrAsync(PostsController.unLikePost));
 
 module.exports = router;

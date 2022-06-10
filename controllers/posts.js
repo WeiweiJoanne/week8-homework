@@ -11,7 +11,7 @@ const PostsController = {
     const id = req.params.id
     if (id !== undefined) {
       const getPosts = await PostModel.findById(id).populate({
-        path:"user",
+        path: "user",
         select: "nickName photo createdAt"
       });
       handleSuccess(res, getPosts);
@@ -56,7 +56,25 @@ const PostsController = {
     handleSuccess(res, deleteAllPosts)
   },
   async likePost(req, res, next) {
-    console.log(req.user.id);
+    const userID = req.user.id
+    const _id = req.params.id
+
+    const addLike = await PostModel.findByIdAndUpdate({ _id }, { $addToSet: { likes: userID } } ,{ returnDocument: 'after'})
+    res.status(201).send({ 
+      "status":"success",
+      addLike
+    })
+  },
+  async unLikePost(req, res, next) {
+    const userID = req.user.id
+    const _id = req.params.id
+
+    const unLike = await PostModel.findByIdAndUpdate({ _id }, {$pull: { likes: userID } }, { returnDocument: 'after' })
+    console.log(unLike);
+    // res.status(201).send({
+    //   "status": "success",
+    //   addLike
+    // })
   },
 }
 

@@ -27,10 +27,36 @@ const userSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
     select: false
-  }
-},{
+  },
+  follower: [
+    {
+      user: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'user'
+      },
+      createdAt: {
+        type: Date,
+        default: Date.now
+      }
+    }
+  ],
+  following: [
+    {
+      user: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'user'
+      },
+      createdAt: {
+        type: Date,
+        default: Date.now
+      }
+    }
+  ]
+}, {
   versionKey: false
 })
+
+
 
 const User = mongoose.model('user', userSchema)
 

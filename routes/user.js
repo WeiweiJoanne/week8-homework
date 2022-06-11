@@ -17,4 +17,10 @@ router.get('/profile', isAuth, handErrAsync(UserController.getProfile));
 router.patch('/profile', isAuth, handErrAsync(UserController.updateProfile));
 router.post('/updatePassword', isAuth, handErrAsync(UserController.resetPWD));
 
+router.post('/:userid/follow', isAuth, handErrAsync(UserController.follow));
+router.delete('/:userid/unfollow', isAuth, handErrAsync(UserController.unFollow));
+
+router.get('/getLikeList', isAuth, handErrAsync(UserController.getLikeList));
+router.get('/following', isAuth, handErrAsync(UserController.getFollowingList));
+
 module.exports = router;

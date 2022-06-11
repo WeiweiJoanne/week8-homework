@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 
 const UserModel = require('../models/user')
+const PostModel = require('../models/posts')
 
 // const handleError = require('../services/handleError')
 const appErr = require('../services/appErr')
@@ -58,18 +59,18 @@ const UserController = {
   },
   async updateProfile(req, res, next) {
     const { nickName, sex } = req.body
-    if (!validator.isLength(nickName, { min: 2 })) {
+    if (nickName && !validator.isLength(nickName, { min: 2 })) {
       return appErr(400, '暱稱至少2個字元以上', next)
     }
-    const updateUser = await UserModel.findByIdAndUpdate(req.user._id, {
+    const updateUser = await UserModel.findByIdAndUpdate(req.user.id, {
       nickName, sex
-    }, { new: true })
+    }, { returnDocument: 'after' })
     handleSuccess(res, updateUser)
   },
   async resetPWD(req, res, next) {
     const { pwd1, pwd2 } = req.body
     if (pwd1 !== pwd2) {
-      return appErr(400, '密碼輸入不一致!',next)
+      return appErr(400, '密碼輸入不一致!', next)
     }
 
     const reg = /^([a-zA-Z]+\d+|\d+[a-zA-Z]+)[a-zA-Z0-9]*$/
@@ -80,10 +81,100 @@ const UserController = {
     }
 
     const password = await bcrypt.hash(pwd1, 12)
-    const updatePWD = await UserModel.findByIdAndUpdate(req.user._id,{
+    const updatePWD = await UserModel.findByIdAndUpdate(req.user._id, {
       password: password
-    }, { new: true})
+    }, { new: true })
     handleSuccess(res, updatePWD)
+
+  },
+  async follow(req, res, next) {
+    const user = req.params.userid
+
+    if (user == req.user.id) {
+      return appErr(400, '使用者不能追蹤自己', next)
+    }
+
+    await UserModel.updateOne(
+      {
+        _id: req.user.id,
+        "following.user": { $ne: user } //有追蹤過的不重複加入追蹤清單
+      },
+      {
+        $push: { following: { user } }
+      })
+
+    await UserModel.updateOne(
+      {
+        _id: user,
+        "follower.user": { $ne: req.user.id } //粉絲不重複加入清單
+      },
+      {
+        $push: { follower: { user: req.user.id } }
+      })
+
+
+    res.status(201).send({
+      "status": "success",
+      "message": "成功追蹤對方"
+    })
+  },
+  async unFollow(req, res, next) {
+    const user = req.params.userid
+
+    if (user == req.user.id) {
+      return appErr(400, '使用者不能取消追蹤自己', next)
+    }
+
+    await UserModel.updateOne(
+      {
+        _id: req.user.id
+      },
+      {
+        $pull: { following: { user } }
+      })
+
+    await UserModel.updateOne(
+      {
+        _id: user
+      },
+      {
+        $pull: { follower: { user: req.user.id } }
+      })
+
+
+    res.status(201).send({
+      "status": "success",
+      "message": "成功取消追蹤對方"
+    })
+  },
+  async getLikeList(req, res, next) {
+    const _id = req.user.id
+
+    const likeList = await PostModel.find({ likes: { $in: { _id } } })
+      .populate({
+        path: "user",
+        select: "nickName _id"
+      })
+    res.status(201).send({
+      "status": "success",
+      likeList
+    })
+
+  },
+  async getFollowingList(req, res, next) {
+    const _id = req.user.id
+
+    const followings = await UserModel.findById({ _id })
+      .populate({
+        path: "following.user",
+        select: "nickName"
+      })
+      .select('following')
+
+    res.status(201).send({
+      "status": "success",
+      "followings": followings.following
+    })
 
   }
 }

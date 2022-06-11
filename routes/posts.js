@@ -15,4 +15,9 @@ router.patch('/post/:id',isAuth, handErrAsync(PostsController.updatePost));
 router.post('/post/:id/like',isAuth, handErrAsync(PostsController.likePost));
 router.delete('/post/:id/unlike', isAuth, handErrAsync(PostsController.unLikePost));
 
+router.post('/post/:id/comment', isAuth, handErrAsync(PostsController.addComment));
+router.get('/post/user/:user', isAuth, handErrAsync(PostsController.getUserPosts));
+
+router.get('/post/user/:user', isAuth, handErrAsync(PostsController.getUserPosts));
+
 module.exports = router;

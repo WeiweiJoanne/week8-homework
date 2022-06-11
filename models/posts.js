@@ -16,7 +16,7 @@ const postSchema = new mongoose.Schema({
   },
   user: {
     type: mongoose.Schema.ObjectId,
-    ref:"user",
+    ref: "user",
     required: [true, '使用者 id 未填寫']
   },
   likes: [
@@ -26,7 +26,15 @@ const postSchema = new mongoose.Schema({
     }
   ]
 }, {
-  versionKey: false
+  versionKey: false,
+  toJSON: { virtuals: true },
+  toObject: { virtuals: true },
+})
+
+postSchema.virtual('comments', {
+  ref: 'Comment',
+  foreignField: 'post',
+  localField: '_id'
 })
 
 const Post = mongoose.model('Post', postSchema)

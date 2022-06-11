@@ -1,0 +1,398 @@
+{
+	"variables": [],
+	"info": {
+		"name": "node.js 直播班 week8",
+		"_postman_id": "9c30a36a-7c8f-5831-8a56-c766742e0d86",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "會員功能",
+			"description": "",
+			"item": [
+				{
+					"name": "註冊會員",
+					"request": {
+						"url": "{{domain}}/users/sign_up",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"nickName\":\"Catty\",\n    \"email\":\"catty@gmail.com\",\n    \"password\":\"catty1206\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "登入會員",
+					"request": {
+						"url": "{{domain}}/users/sign_in",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\":\"catty@gmail.com\",\n    \"password\":\"catty106\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "重設密碼",
+					"request": {
+						"url": "{{domain}}/users/updatePassword",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyOTg2NmQ0NzYzMzBjOTZlM2NlMjA0NSIsImlhdCI6MTY1NDE1NTEwMiwiZXhwIjoxNjU0NzU5OTAyfQ.Uduqpct7ukD6u6rVAbNsntlU0DoTOs2mIfRpBsmuKGk",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"pwd1\":\"132456798aaa\",\r\n    \"pwd2\":\"132456798aaa\"\r\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "取得個人資料",
+					"request": {
+						"url": "{{domain}}/users/profile",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{AuthorizationCatty}}",
+								"description": ""
+							}
+						],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "更新個人資料",
+					"request": {
+						"url": "{{domain}}/users/profile",
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{AuthorizationJoanne}}",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n    \"sex\":\"female\"\r\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "其他",
+			"description": "",
+			"item": [
+				{
+					"name": "上傳圖片",
+					"request": {
+						"url": "{{domain}}/upload",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "",
+									"value": "",
+									"description": "",
+									"type": "file"
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "動態貼文",
+			"description": "",
+			"item": [
+				{
+					"name": "取得所有貼文",
+					"request": {
+						"url": "{{domain}}/posts",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{AuthorizationCatty}}",
+								"description": ""
+							}
+						],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "取得單一貼文",
+					"request": {
+						"url": "{{domain}}/posts/62a4e93adecf5f8324a2ca15",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{AuthorizationJoanne}}",
+								"description": ""
+							}
+						],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "新增貼文",
+					"request": {
+						"url": "{{domain}}/post",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Authorization",
+								"value": "{{AuthorizationCatty}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "刪除貼文",
+					"request": {
+						"url": "{{domain}}/posts",
+						"method": "DELETE",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "新增一則貼文的讚",
+					"request": {
+						"url": "{{domain}}/post/62a4f664d7119d03b7b72ac8/like",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{AuthorizationCatty}}",
+								"description": ""
+							}
+						],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "取消一則貼文的讚",
+					"request": {
+						"url": "{{domain}}/post/62a4e93adecf5f8324a2ca15/unlike",
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{AuthorizationJoanne}}",
+								"description": ""
+							}
+						],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "新增一則貼文的留言",
+					"request": {
+						"url": "{{domain}}/post/62a4e93adecf5f8324a2ca15/comment",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{AuthorizationJoanne}}",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"comment\":\"我也喜歡這則貼文\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "取得個人所有貼文列表",
+					"request": {
+						"url": "{{domain}}/post/user/62a2178760dc5c9b5b24454e",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{AuthorizationTommy}}",
+								"description": ""
+							}
+						],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "會員按讚追蹤動態",
+			"description": "",
+			"item": [
+				{
+					"name": "追蹤朋友",
+					"request": {
+						"url": "{{domain}}/users/62a4ccef3d27992a861c236f/follow",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{AuthorizationCatty}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "",
+									"value": "",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "取消追蹤朋友",
+					"request": {
+						"url": "{{domain}}/users/62a2178760dc5c9b5b24454e/unfollow",
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{AuthorizationCatty}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "",
+									"value": "",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "取得個人按讚列表",
+					"request": {
+						"url": "{{domain}}/users/getLikeList",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{AuthorizationCatty}}",
+								"description": ""
+							}
+						],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "取得個人追蹤名單",
+					"request": {
+						"url": "{{domain}}/users/following",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{AuthorizationCatty}}",
+								"description": ""
+							}
+						],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
